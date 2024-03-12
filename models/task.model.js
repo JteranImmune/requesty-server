@@ -34,7 +34,7 @@ const TaskSchema = new Schema({
             default: Date.now()
         },
         dueDate: {
-        type: Date
+            type: Date
         },
         // assignedTo: {
         //     type: Types.ObjectId,
