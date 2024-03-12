@@ -1,4 +1,4 @@
-const  { Schema, model, Types } = mongoose;
+const  { Schema, model, Types } = require('mongoose');
 
 const TaskSchema = new Schema({
 
@@ -36,15 +36,15 @@ const TaskSchema = new Schema({
         dueDate: {
         type: Date
         },
-        assignedTo: {
-            type: Types.ObjectId,
-            ref: "User"
-        },
-        owner: {
-            type: Types.ObjectId,
-            ref: "User",
-            required: [true,"A Task must belong to someone"]
-        },
+        // assignedTo: {
+        //     type: Types.ObjectId,
+        //     ref: "User"
+        // },
+        // owner: {
+        //     type: Types.ObjectId,
+        //     ref: "User",
+        //     required: [true,"A Task must belong to someone"]
+        // },
     },
     {
         timestamps: true,

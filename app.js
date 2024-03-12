@@ -11,6 +11,6 @@ require("./config")(app);
 const indexRoutes = require("./routes/index.routes.js");
 app.use("/api", indexRoutes);
 
-requires("./error-handling")(app);
+require("./error-handling")(app);
 
 module.exports = app;

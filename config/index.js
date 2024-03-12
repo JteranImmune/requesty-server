@@ -24,6 +24,6 @@ module.exports = (app) => {
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
 
-    require('../passport')(app);
+    // require('../passport')(app);
 
 };

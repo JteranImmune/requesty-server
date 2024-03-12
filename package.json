@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed": "node bin/task.seed.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
