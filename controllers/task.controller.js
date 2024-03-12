@@ -4,7 +4,7 @@ const Task = require( '../models/task.model.js' );
 const listAllTask = async ( _req, res, next ) => {
     try{
         const task = await Task.find().sort({createdAt: -1}).lean();
-        console.log("Create Task");
+        console.log("List Task");
         res.status(200).json(task)
         
     }catch(err){
