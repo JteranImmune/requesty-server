@@ -19,7 +19,7 @@ const getOneTask = async ( req, res, next )=>{
 
         const task = await Task.findById(task_id);
 
-        if(!task) return res.status(404).json({ msg : "No task with that id." });
+        if(!task) return res.status(404).json({ msg : "No task with this id." });
 
         res.status(200).json(task);
 
@@ -30,7 +30,6 @@ const getOneTask = async ( req, res, next )=>{
 
 const  createNewTask = async ( req, res, next ) => {
     const {
-        _id,
         title,
         description,
         attachments,
@@ -46,7 +45,6 @@ const  createNewTask = async ( req, res, next ) => {
         }
 
         await Task.create({
-            _id,
             title,
             description,
             attachments,
@@ -55,13 +53,54 @@ const  createNewTask = async ( req, res, next ) => {
             dueDate
         });
         res.sendStatus(201);
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
+};
+
+const editOneTask = async (req,res,next)=> {
+    const { task_id } = req.params;
+    const { 
+        title,
+        description,
+        attachments,
+        status,
+        priority,
+        dueDate } = req.body;
+    try {
+        if(!title || !description || !status || !priority || !dueDate){
+            return res.status(400).json({ msg : "Missing fields!" })
+        }
+
+        if (!Types.ObjectId.isValid(task_id)) {
+            return res.status(400).json({ msg: 'Invalid restaurant id!' });
+        }
+
+        const task = await Task.findByIdAndUpdate(task_id, 
+            {
+                title,
+                description,
+                attachments,
+                status,
+                priority,
+                dueDate
+            },
+            {new:true} 
+            ).select('-createdAt -updateAdt');
+        
+        if(!task) return res.status(404).json({ msg : "Task id not found for update" });
+
+        res.status(200).json(task);
+        
+    } catch (err) {
+        next(err);
+    }
+
 };
 
 module.exports = {
     listAllTask,
     getOneTask,
-    createNewTask
+    createNewTask,
+    editOneTask
 };

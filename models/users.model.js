@@ -1,8 +1,7 @@
-const  { Schema, model, Types } = require('mongoose');
+const  { Schema, model } = require('mongoose');
 
 const UserSchema = new  Schema({
 
-        _id: Types.ObjectId,
         username: { 
             type : String, 
             required : true,
@@ -16,7 +15,12 @@ const UserSchema = new  Schema({
         email:{
             type:String,
             unique:true,
-            match:/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}/,
+            minLength: 1,
+            lowercase: true,
+            match: [
+                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+                'Choose a valid email',
+            ],
             required:[true, 'Please provide an email'],
             trim: true
         },

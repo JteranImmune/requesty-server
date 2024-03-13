@@ -1,8 +1,7 @@
-const  { Schema, model, Types } = require('mongoose');
+const  { Schema, model } = require('mongoose');
 
 const TaskSchema = new Schema({
 
-        _id: Types.ObjectId,   
         title:{
             type: String,
             required: [true,'Please provide a task name'],
@@ -37,11 +36,11 @@ const TaskSchema = new Schema({
             type: Date
         },
         // assignedTo: {
-        //     type: Types.ObjectId,
+        //     type: Schema.Types.ObjectId,
         //     ref: "User"
         // },
         // owner: {
-        //     type: Types.ObjectId,
+        //     type: Schema.Types.ObjectId,
         //     ref: "User",
         //     required: [true,"A Task must belong to someone"]
         // },
