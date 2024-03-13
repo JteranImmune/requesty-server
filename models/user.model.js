@@ -1,27 +1,10 @@
 const  { Schema, model } = require('mongoose');
 
-const UserSchema = new  Schema({
+const userSchema = new  Schema({
 
-        username: { 
-            type : String, 
-            required : true,
-            trim: true 
-        },
-        password:{
-            type :String ,
-            required:true,
-            trim: true,
-            // validate(value){
-            //     if (value.length <8 ) {
-            //         throw new Error("Password should be at least 6 characters");
-            //     } else if (!/[a-z]/.test(value) || !/[A-Z]/.test(value) || !/[0-9]/.test(value)) {
-            //         throw new Error("Password should contain at least one lowercase letter, one uppercase letter, and one number");
-            //     }
-            // }
-        },
         email:{
-            type:String,
-            unique:true,
+            type: String,
+            unique: true,
             minLength: 1,
             lowercase: true,
             match: [
@@ -32,8 +15,19 @@ const UserSchema = new  Schema({
             trim: true,
             maxlength: 50,
         },
+        password:{
+            salt:{ type: String, required: true},
+            hash:{ type: String, required:true},
+            // validate(value){
+            //     if (value.length <8 ) {
+            //         throw new Error("Password should be at least 6 characters");
+            //     } else if (!/[a-z]/.test(value) || !/[A-Z]/.test(value) || !/[0-9]/.test(value)) {
+            //         throw new Error("Password should contain at least one lowercase letter, one uppercase letter, and one number");
+            //     }
+            // }
+        },
         name: {
-            type:String,
+            type: String,
             require:[true,'Please add a name'],
             trim: true,
             maxlength: 20,
@@ -44,12 +38,14 @@ const UserSchema = new  Schema({
             default:'Admin',
         },
         avatar: {
-            url: String,
+            url: { 
+                type: String, 
+                default: "https://i.pravatar.cc/150?u=fake@pravatar.com"
+            },
             filename: String,
             mimetype: String,
             path: String,
-            size: Number,
-            default: "https://res.cloudinary.com/dqvgwl5s3/image/upload/v1627822680/avatars/default_user_yxjnhk"
+            size: Number
         },
         createdAt:{
             type:Date,
@@ -58,10 +54,17 @@ const UserSchema = new  Schema({
     },
     {
         timestamps: true,
-        versionKey: false
-    }
+        versionKey: false,
+        toJSON:{
+            virtuals: true,
+            transform: function(doc, ret) {
+                delete ret.password;
+                return ret;
+            },
+        },
+    }   
 );
 
-const User = model('User', UserSchema)
+const User = model('User', userSchema)
 
 module.exports = User;

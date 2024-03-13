@@ -22,9 +22,10 @@ passport.use(
                     role: user.role,
                     name: user.name
                 };
+
                 return done(null, newPayLoad);
             } catch (err) {
-                return  done(err, false);
+                return  done(err);
             }
         }
     )

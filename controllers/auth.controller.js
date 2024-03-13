@@ -1,13 +1,15 @@
 const User = require( '../models/user.model.js' );
-const { createPass } = require('utils/auth');
+const { createPass } = require('../utils/auth');
 const jwt = require("jsonwebtoken");
 
-const signup = async  (req, res) => {
+const signup = async  (req, res, next) => {
     try {
         let user = await User.findOne({email: req.body.email});
-        if(!user) res.status(400).json({error:true, message:"User already exist"})
+
+        if(user) res.status(400).json({error:true, message:"User already exist"});
 
         const passwordCrypt = createPass(req.body.password);
+
         const result = await  User.create({
             name: req.body.name,
             email: req.body.email, 
@@ -19,7 +21,7 @@ const signup = async  (req, res) => {
         
     } catch (err) {
         console.log(err);
-        res.json({ error: true , data:err , message:'Error on server!'});
+        next(err);
     }
 };
 
