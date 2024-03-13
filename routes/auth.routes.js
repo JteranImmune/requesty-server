@@ -9,6 +9,6 @@ router.all('/fail' , (req, res) =>{
 
 router.post('/login', passport.authenticate('login', {session:false, failureRedirect: "api/auth/fail" }), login);
 router.post('/signup', signup);
-router.post('/verify'), passport.authenticate('jwt', { session:false}, verify);
+router.post('/verify', passport.authenticate('jwt', { session:false}), verify);
 
 module.exports = router;
