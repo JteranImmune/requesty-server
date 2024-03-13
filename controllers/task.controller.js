@@ -98,9 +98,27 @@ const editOneTask = async (req,res,next)=> {
 
 };
 
+const deleteOneTask = async (req,res,next)=>{
+    const { task_id } = req.params;
+
+    try {
+        if (!Types.ObjectId.isValid(task_id)) return res.status(400).json({msg: "Invalid Task ID"});
+
+        const task = await Task.findByIdAndDelete(task_id);
+
+        if(!task) return res.status(404).json({msg:"No task with this ID was found."});
+
+        res.status(200).json({msg:"The task has been deleted successfully."});
+        
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     listAllTask,
     getOneTask,
     createNewTask,
-    editOneTask
+    editOneTask,
+    deleteOneTask
 };
