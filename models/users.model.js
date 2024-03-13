@@ -10,7 +10,14 @@ const UserSchema = new  Schema({
         password:{
             type :String ,
             required:true,
-            trim: true
+            trim: true,
+            // validate(value){
+            //     if (value.length <8 ) {
+            //         throw new Error("Password should be at least 6 characters");
+            //     } else if (!/[a-z]/.test(value) || !/[A-Z]/.test(value) || !/[0-9]/.test(value)) {
+            //         throw new Error("Password should contain at least one lowercase letter, one uppercase letter, and one number");
+            //     }
+            // }
         },
         email:{
             type:String,
@@ -22,23 +29,19 @@ const UserSchema = new  Schema({
                 'Choose a valid email',
             ],
             required:[true, 'Please provide an email'],
-            trim: true
+            trim: true,
+            maxlength: 50,
         },
         name: {
-            firstName: {
-                type:String,
-                require:'First Name is Required',
-                trim: true
-            },
-            lastName: {
-                type:String,
-                trim: true
-            }
+            type:String,
+            require:[true,'Please add a name'],
+            trim: true,
+            maxlength: 20,
         },
         role: {
             type: String,
-            enum: ['Client', 'Admin', 'Team'], // Only allow the values 'User' and 'Admin'.
-            default:'Team',
+            enum: ['Admin', 'Team'],
+            default:'Admin',
         },
         avatar: {
             url: String,
@@ -48,9 +51,9 @@ const UserSchema = new  Schema({
             size: Number,
             default: "https://res.cloudinary.com/dqvgwl5s3/image/upload/v1627822680/avatars/default_user_yxjnhk"
         },
-        created:{
+        createdAt:{
             type:Date,
-            default:  Date.now,
+            default: Date.now()
         }
     },
     {
@@ -59,6 +62,6 @@ const UserSchema = new  Schema({
     }
 );
 
-const User = model('user', UserSchema)
+const User = model('User', UserSchema)
 
 module.exports = User;

@@ -36,6 +36,7 @@ const  createNewTask = async ( req, res, next ) => {
         status,
         priority,
         dueDate,
+        //service,
         // assignedTo,
         // owner,
     } = req.body;
@@ -102,6 +103,7 @@ const deleteOneTask = async (req,res,next)=>{
     const { task_id } = req.params;
 
     try {
+
         if (!Types.ObjectId.isValid(task_id)) return res.status(400).json({msg: "Invalid Task ID"});
 
         const task = await Task.findByIdAndDelete(task_id);
@@ -115,10 +117,35 @@ const deleteOneTask = async (req,res,next)=>{
     }
 };
 
+const changeOneTaskStatus = async  (req,res,next) =>{
+    
+    const { task_id } = req.params;
+    const { status } = req.body;
+
+    try {
+
+        if (!Types.ObjectId.isValid(task_id)) return res.status(400).json({msg: "Invalid Task ID"});
+
+        if(!status){
+            return res.status(400).json({ msg : "Missing  status field!" })
+        }
+
+       const updTask = await Task.findByIdAndUpdate(task_id,{status}, { new: true });
+
+       if(!updTask) return res.status(404).json({msg:'This task does not exist.'})
+
+       res.status(200).json(updTask);
+
+    }catch(err){ 
+        next(err);
+    }
+};
+
 module.exports = {
     listAllTask,
     getOneTask,
     createNewTask,
     editOneTask,
-    deleteOneTask
+    deleteOneTask,
+    changeOneTaskStatus
 };

@@ -4,7 +4,7 @@ const TaskSchema = new Schema({
 
         title:{
             type: String,
-            required: [true,'Please provide a task name'],
+            required: [true,'Please provide a task title'],
             unique: true,
             maxlength: 100,
             trim: true
@@ -44,6 +44,11 @@ const TaskSchema = new Schema({
         //     ref: "User",
         //     required: [true,"A Task must belong to someone"]
         // },
+        // service:{
+        //     type: Schema.Types.ObjectId,
+        //     ref: "Service",
+        //     required: [true,"A service must be assign to the task"]
+        // }
     },
     {
         timestamps: true,
