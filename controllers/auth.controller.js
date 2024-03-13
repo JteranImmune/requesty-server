@@ -1,9 +1,8 @@
-const { Types } = require('mongoose');
 const User = require( '../models/user.model.js' );
 const { createPass } = require('utils/auth');
 const jwt = require("jsonwebtoken");
 
-const signUp = async  (req, res) => {
+const signup = async  (req, res) => {
     try {
         let user = await User.findOne({email: req.body.email});
         if(!user) res.status(400).json({error:true, message:"User already exist"})
@@ -26,7 +25,7 @@ const signUp = async  (req, res) => {
 
 const login = async (req, res) =>{
     res.json({
-        token: jwt.sign({user: req.user._id}, 'secret', {expiresIn: "1d"}),
+        token: jwt.sign({user: req.user._id}, process.env.SECRET_KEY, {expiresIn: "1d"}),
     });
 };
 
@@ -36,7 +35,7 @@ const verify =  async (req,res) =>{
 
 
 module.exports = {
-    signUp,
+    signup,
     login,
     verify
 }
