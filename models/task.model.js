@@ -35,10 +35,10 @@ const taskSchema = new Schema({
         dueDate: {
             type: Date
         },
-        // assignedTo: {
-        //     type: Schema.Types.ObjectId,
-        //     ref: "User"
-        // },
+        owner: {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        },
         // owner: {
         //     type: Schema.Types.ObjectId,
         //     ref: "User",

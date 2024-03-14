@@ -37,8 +37,7 @@ const  createNewTask = async ( req, res, next ) => {
         priority,
         dueDate,
         //service,
-        // assignedTo,
-        // owner,
+        owner,
     } = req.body;
     try {
         if(!title || !description || !status || !priority || !dueDate){
@@ -51,7 +50,8 @@ const  createNewTask = async ( req, res, next ) => {
             attachments,
             status,
             priority,
-            dueDate
+            dueDate,
+            owner,
         });
         res.sendStatus(201);
     } catch (err) {
@@ -141,11 +141,36 @@ const changeOneTaskStatus = async  (req,res,next) =>{
     }
 };
 
+const assignOneTask =  async (req, res, next) => {
+    
+    const { task_id } = req.params;
+    const { owner } = req.body;
+
+    try {
+
+        if (!owner) return res.status(400).json({ msg: 'Missing owner field' });
+        else if (!Types.ObjectId.isValid(owner)) return res.status(400).json({ msg: 'Owner ID is invalid!' });
+        else if (!Types.ObjectId.isValid(task_id)) return res.status(400).json({ msg: 'Task ID is Invalid!' });
+    
+        let task = await Task.findById(task_id);
+    
+        if (!task) return res.status(404).json({ msg: 'The task with given id was not found.' });
+       
+        task = await task.updateOne({owner: [owner]});
+        
+        res.send(task);
+    } catch (err) {
+        next(err);
+    }
+
+}
+
 module.exports = {
     listAllTask,
     getOneTask,
     createNewTask,
     editOneTask,
     deleteOneTask,
-    changeOneTaskStatus
+    changeOneTaskStatus,
+    assignOneTask
 };
