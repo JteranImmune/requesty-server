@@ -35,9 +35,14 @@ const verify =  async (req,res) =>{
     res.json(req.user);
 };
 
+const fail = (req, res) => {
+    res.status(401).json({ msg:  "Invalid Authentication credentials" });
+};
+
 
 module.exports = {
     signup,
     login,
-    verify
+    verify,
+    fail
 }
