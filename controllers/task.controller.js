@@ -74,7 +74,7 @@ const editOneTask = async (req,res,next)=> {
         }
 
         if (!Types.ObjectId.isValid(task_id)) {
-            return res.status(400).json({ msg: 'Invalid restaurant id!' });
+            return res.status(400).json({ msg: 'Invalid task id!' });
         }
 
         const task = await Task.findByIdAndUpdate(task_id, 

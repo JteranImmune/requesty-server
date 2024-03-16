@@ -17,10 +17,14 @@ const serviceSchema = new Schema({
         trim: true
     },
     image:{
-        url: String,
+        url: { 
+            type: String, 
+            default: "https://i.pravatar.cc/150?u=fake@pravatar.com"
+        },
         filename: String,
         mimetype: String,
-        default: "https://res.cloudinary.com/dqvgwl5s3/image/upload/v1627822680/avatars/default_user_yxjnhk"
+        path: String,
+        size: Number
     },
     price:{
         type: Number,
