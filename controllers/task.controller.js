@@ -36,11 +36,10 @@ const  createNewTask = async ( req, res, next ) => {
         status,
         priority,
         dueDate,
-        //service,
-        owner,
+        service,
     } = req.body;
     try {
-        if(!title || !description || !status || !priority || !dueDate){
+        if(!title || !description || !priority || !dueDate  || !service){
             return res.status(400).json({ msg : "Missing fields!" })
         }
 
@@ -48,10 +47,10 @@ const  createNewTask = async ( req, res, next ) => {
             title,
             description,
             attachments,
-            status,
+            status: status || "submitted",
             priority,
             dueDate,
-            owner,
+            service
         });
         res.sendStatus(201);
     } catch (err) {
@@ -67,7 +66,8 @@ const editOneTask = async (req,res,next)=> {
         attachments,
         status,
         priority,
-        dueDate } = req.body;
+        dueDate, 
+    } = req.body;
     try {
         if(!title || !description || !status || !priority || !dueDate){
             return res.status(400).json({ msg : "Missing fields!" })
@@ -84,7 +84,7 @@ const editOneTask = async (req,res,next)=> {
                 attachments,
                 status,
                 priority,
-                dueDate
+                dueDate,
             },
             {new:true} 
             ).select('-createdAt -updateAdt');

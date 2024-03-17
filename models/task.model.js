@@ -22,7 +22,8 @@ const taskSchema = new Schema({
         },    
         status: {
             type: String,
-            enum: ['submitted','in progress', 'completed', 'on hold']
+            enum: ['submitted','in progress', 'completed', 'on hold'],
+            default: "submitted",
         },
         priority: {
             type: String,
@@ -39,16 +40,11 @@ const taskSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "User"
         },
-        // owner: {
-        //     type: Schema.Types.ObjectId,
-        //     ref: "User",
-        //     required: [true,"A Task must belong to someone"]
-        // },
-        // service:{
-        //     type: Schema.Types.ObjectId,
-        //     ref: "Service",
-        //     required: [true,"A service must be assign to the task"]
-        // }
+        service:{
+            type: Schema.Types.ObjectId,
+            ref: "Service",
+            required: [true,"A service must be assign to the task"]
+        }
     },
     {
         timestamps: true,

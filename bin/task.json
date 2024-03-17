@@ -5,34 +5,34 @@
         "attachments": [],
         "status": "submitted",
         "createdAt": "2024-02-27T12:00:00Z",
-        "priority": "high",
+        "priority": "Medium",
         "dueDate": "2024-12-28T12:00:00Z"
     },
     {
         "title": "Task number 2 for testing",
         "description": "This is a task description.",
         "attachments": [],
-        "status": "submitted",
+        "status": "in progress",
         "createdAt": "2024-02-27T12:00:00Z",
-        "priority": "high",
+        "priority": "High",
         "dueDate": "2024-12-28T12:00:00Z"
     },
     {
         "title": "Task number 3 for testing",
         "description": "This is a task description.",
         "attachments": [],
-        "status": "submitted",
+        "status": "on hold",
         "createdAt": "2024-02-27T12:00:00Z",
-        "priority": "high",
+        "priority": "Low",
         "dueDate": "2024-12-28T12:00:00Z"
     },
     {
         "title": "Task number 4 for testing",
         "description": "This is a task description.",
         "attachments": [],
-        "status": "submitted",
+        "status": "completed",
         "createdAt": "2024-02-27T12:00:00Z",
-        "priority": "high",
+        "priority": "High",
         "dueDate": "2024-12-28T12:00:00Z"
     }
 ]
