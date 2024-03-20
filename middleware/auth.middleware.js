@@ -1,13 +1,31 @@
-const userRolMiddleware = (req, res, next)  => {
+const userRolMiddleware = (userRoles) => {
 
-    try {
-        if(!req.user) return res.sendStatus(401);
-        if(req.user.role !== 'Admin') return res.sendStatus(403);
+    return (req, res, next) => {
+      try {
 
-        next();
-    } catch (err) {
+        if (!req.user) return res.sendStatus(401)
+
+        if (!userRoles.includes(req.user.role)) return res.sendStatus(401)
+
+        next()
+
+      } catch (err) {
         next(err)
+      }
     }
 }
 
-module.exports = userRolMiddleware;
+// const userMiddleware = (req, res, next)  => {
+
+//     try {
+
+//         if(!req.user) return res.sendStatus(401);
+
+//         next();
+
+//     } catch (err) {
+//         next(err)
+//     }
+// }
+
+module.exports = {userRolMiddleware};
