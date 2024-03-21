@@ -36,7 +36,7 @@ const verify =  async (req,res) =>{
 };
 
 const fail = (req, res) => {
-    res.status(401).json({ msg:  "Invalid Authentication credentials" });
+    res.status(401).json({ msg: "Invalid Authentication credentials" });
 };
 
 

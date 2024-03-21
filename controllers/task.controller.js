@@ -28,7 +28,7 @@ const getOneTask = async ( req, res, next )=>{
     }
 }
 
-const  createNewTask = async ( req, res, next ) => {
+const createNewTask = async ( req, res, next ) => {
     const {
         title,
         description,

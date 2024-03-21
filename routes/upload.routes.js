@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { attachmentsUploadMiddleware } = require('../middleware/upload.middleware');
+const { attachmentsUploadMiddleware } = require('../middlewares/upload.middleware');
 const { uploadAttachments, uploadAvatar } = require('../controllers/upload.controller');
 
 const router = Router();
