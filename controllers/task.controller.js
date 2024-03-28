@@ -12,6 +12,29 @@ const listAllTask = async ( _req, res, next ) => {
     }
 };
 
+const listDashboardTask = async ( _req, res, next ) => {
+    try{
+        const formatDate = (dateString) => {
+            const date = new Date(dateString);
+            return date.toISOString().split('T')[0];
+          };
+          
+        const tasks = await Task.find().sort({ createdAt: -1 }).populate('owner', 'avatar').lean();
+        const orderedTasks = tasks.map(task => ({
+            _id: task._id,
+            title: task.title,
+            client: task.client || 'Unassigned',
+            status: task.status,
+            priority: task.priority || '',
+            dueDate: formatDate(task.dueDate) || '',
+            owner: task.owner ? task.owner.avatar.url : ''
+        }));
+        res.status(200).json(orderedTasks);
+    }catch(err){
+        next(err);
+    }
+};
+
 const getOneTask = async ( req, res, next )=>{
     try {
         const { task_id }  = req.params;
@@ -167,6 +190,7 @@ const assignOneTask =  async (req, res, next) => {
 
 module.exports = {
     listAllTask,
+    listDashboardTask,
     getOneTask,
     createNewTask,
     editOneTask,

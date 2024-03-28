@@ -6,6 +6,7 @@ const authenticationUsers = [passport.authenticate("jwt", { session: false }), u
 
 const {
     listAllTask,
+    listDashboardTask,
     getOneTask,
     createNewTask,
     editOneTask,
@@ -15,6 +16,7 @@ const {
 } = require( '../controllers/task.controller' );
 
 router.get('/list', listAllTask); // List all tasks
+router.get('/dashboard', listDashboardTask); // List all tasks for the dashboard page
 router.get('/getOne/:task_id', getOneTask); // Get one task by id
 router.post('/create', authenticationUsers, createNewTask); // Create a new task
 router.put('/edit/:task_id',authenticationUsers, editOneTask); // Edit an existing task
