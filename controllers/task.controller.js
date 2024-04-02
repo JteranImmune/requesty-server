@@ -19,16 +19,23 @@ const listDashboardTask = async ( _req, res, next ) => {
             return date.toISOString().split('T')[0];
           };
           
-        const tasks = await Task.find().sort({ createdAt: -1 }).populate('owner', 'avatar').lean();
+        const tasks = await Task.find().sort({ createdAt: -1 }).populate('owner', 'avatar name email').populate('client', 'name email').lean();
+
+        console.log(tasks);
+
         const orderedTasks = tasks.map(task => ({
             _id: task._id,
             title: task.title,
-            client: task.client || 'Unassigned',
+            client:  task.client ? task.client.name : 'Unassigned',
+            owner: task.owner ? task.owner.avatar.url : 'https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/05/05ab5b380d37342ce7dd5c8981eb91d2c4b3a75e.jpg',
             status: task.status,
             priority: task.priority || '',
+            createdAt: formatDate(task.createdAt) || '',
             dueDate: formatDate(task.dueDate) || '',
-            owner: task.owner ? task.owner.avatar.url : ''
+            ownerName: task.owner ? task.owner.name : 'No owner',
+            email: task.owner ? task.owner.email : 'No Email'
         }));
+
         res.status(200).json(orderedTasks);
     }catch(err){
         next(err);
@@ -40,7 +47,7 @@ const getOneTask = async ( req, res, next )=>{
         const { task_id }  = req.params;
         if (!Types.ObjectId.isValid(task_id)) return res.status(400).json({msg: "Invalid Task ID"});
 
-        const task = await Task.findById(task_id);
+        const task = await Task.findById(task_id).populate('owner', 'avatar name email').lean();
 
         if(!task) return res.status(404).json({ msg : "No task with this id." });
 
@@ -60,6 +67,8 @@ const createNewTask = async ( req, res, next ) => {
         priority,
         dueDate,
         service,
+        owner,
+        client,
     } = req.body;
     try {
         if(!title || !description || !priority || !dueDate  || !service){
@@ -73,7 +82,9 @@ const createNewTask = async ( req, res, next ) => {
             status: status || "submitted",
             priority,
             dueDate,
-            service
+            service,
+            owner,
+            client,
         });
         res.sendStatus(201);
     } catch (err) {
@@ -89,7 +100,8 @@ const editOneTask = async (req,res,next)=> {
         attachments,
         status,
         priority,
-        dueDate, 
+        dueDate,
+        owner, 
     } = req.body;
     try {
         if(!title || !description || !status || !priority || !dueDate){
@@ -108,6 +120,7 @@ const editOneTask = async (req,res,next)=> {
                 status,
                 priority,
                 dueDate,
+                owner
             },
             {new:true} 
             ).select('-createdAt -updateAdt');

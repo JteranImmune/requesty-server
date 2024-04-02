@@ -1,7 +1,7 @@
 const { Types } = require('mongoose');
 const User = require( '../models/user.model.js' );
 
-const listAllTeamUsers = async ( _req, res, next ) => {
+const listAllClientUsers = async ( _req, res, next ) => {
     try{
 
         const formatDate = (dateString) => {
@@ -9,17 +9,16 @@ const listAllTeamUsers = async ( _req, res, next ) => {
             return date.toISOString().split('T')[0];
           };
 
-        const users = await User.find({ role: "Team" })
+        const users = await User.find({ role: "Client" })
                                 .sort({ createdAt: -1 })
-                                .select('_id name email role avatar createdAt')
+                                .select('_id name email avatar createdAt')
                                 .lean();
-        console.log("List of Users with Role Team");
+        console.log("List of Users with Role Client");
 
         const orderedUsers = users.map(user => ({
             _id: user._id,
             name: user.name,
             email: user.email,
-            role: user.role || 'Unassigned',
             avatar: user.avatar ? user.avatar.url : 'https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/05/05ab5b380d37342ce7dd5c8981eb91d2c4b3a75e.jpg',
             createdAt: formatDate(user.createdAt) || '',
         }));
@@ -32,10 +31,10 @@ const listAllTeamUsers = async ( _req, res, next ) => {
     }
 };
 
-const getOneTeamUser = async ( req, res, next )=>{
+const getOneClientUser = async ( req, res, next )=>{
     try {
         const { user_id }  = req.params;
-        if (!Types.ObjectId.isValid(user_id)) return res.status(400).json({msg: "Invalid user ID"});
+        if (!Types.ObjectId.isValid(user_id)) return res.status(400).json({msg: "Invalid client ID"});
 
         const user = await User.findById(user_id);
 
@@ -48,7 +47,7 @@ const getOneTeamUser = async ( req, res, next )=>{
     }
 }
 
-// const createNewTeamUser = async ( req, res, next ) => {
+// const createNewClientUser = async ( req, res, next ) => {
 //     const {
 //         name,
 //         role,
@@ -74,7 +73,7 @@ const getOneTeamUser = async ( req, res, next )=>{
 //     }
 // };
 
-const editOneTeamUser = async (req,res,next)=> {
+const editOneClientUser = async (req,res,next)=> {
     const { user_id } = req.params;
     const { 
         name,
@@ -109,7 +108,7 @@ const editOneTeamUser = async (req,res,next)=> {
 
 };
 
-const deleteOneTeamUser = async (req,res,next)=>{
+const deleteOneClientUser = async (req,res,next)=>{
     const { user_id } = req.params;
 
     try {
@@ -128,9 +127,9 @@ const deleteOneTeamUser = async (req,res,next)=>{
 };
 
 module.exports = {
-    listAllTeamUsers,
-    getOneTeamUser,
-    // createNewTeamUser,
-    editOneTeamUser,
-    deleteOneTeamUser,
+    listAllClientUsers,
+    getOneClientUser,
+    // createNewClientUser,
+    editOneClientUser,
+    deleteOneClientUser,
 };

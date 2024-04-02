@@ -1,19 +1,14 @@
-const cloudinary = require("cloudinary").v2
+const cloudinary = require("../utils/cloudinary")
 const multer = require("multer")
 const { CloudinaryStorage } = require("multer-storage-cloudinary")
-
           
-cloudinary.config({ 
-    cloud_name: process.env.CLOUDINARY_NAME,
-    api_key: process.env.CLOUDINARY_KEY,
-    api_secret: process.env.CLOUDINARY_SECRET
-});
 
 const storageClientsAttachments = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        allowed_formats: ["jpg", "png", "pdf"],
-        folder: "task-attachments"
+        allowed_formats: ["jpg", "png", "pdf", "svg"],
+        folder: "task-attachments",
+        resource_type: "image",
     }
 })
 
@@ -25,7 +20,13 @@ const storageAvatar = new CloudinaryStorage({
     }
 })
 
-const multerInstance = multer({ storageClientsAttachments })
+// const localStorage = multer.diskStorage({
+//     filename: function (req,file,cb) {
+//       cb(null, file.originalname)
+//     }
+//   });
+
+const multerInstance = multer({ storage: storageClientsAttachments })
 const multerInstanceAvatar = multer({ storageAvatar })
 
 const attachmentsUploadMiddleware = multerInstance.array('task-image', 10);

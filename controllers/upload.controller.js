@@ -1,16 +1,19 @@
 const { Types } = require('mongoose');
 const Task = require( '../models/task.model.js' );
 
-const uploadAttachments =  async ( req, res, next) => {
+const uploadAttachments =  async (req, res, next) => {
 
     try {
 
         const attachments = req.files;
 
+        console.log(attachments)
+
         const attachmentData = attachments.map(attachment =>({
             filename: attachment.filename,
             mimetype: attachment.mimetype,
-            size:attachment.size
+            size:attachment.size,
+            url:attachment.path,
         }));
         
         if (!req.files) return res.status(400).send({ error: "No file provided" });

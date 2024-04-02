@@ -4,7 +4,7 @@ const { uploadAttachments, uploadAvatar } = require('../controllers/upload.contr
 
 const router = Router();
 
-router.post('/attachments', attachmentsUploadMiddleware, uploadAttachments);
-router.post('/avatar', attachmentsUploadMiddleware, uploadAvatar);
+router.post('/upload', attachmentsUploadMiddleware, uploadAttachments);
+router.post('/upload', attachmentsUploadMiddleware, uploadAvatar);
 
 module.exports = router;

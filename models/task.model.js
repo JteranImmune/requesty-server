@@ -39,6 +39,10 @@ const taskSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "User"
         },
+        client: {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        },
         service:{
             type: Schema.Types.ObjectId,
             ref: "Service",

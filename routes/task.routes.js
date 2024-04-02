@@ -18,9 +18,9 @@ const {
 router.get('/list', listAllTask); // List all tasks
 router.get('/dashboard', listDashboardTask); // List all tasks for the dashboard page
 router.get('/getOne/:task_id', getOneTask); // Get one task by id
-router.post('/create', authenticationUsers, createNewTask); // Create a new task
-router.put('/edit/:task_id',authenticationUsers, editOneTask); // Edit an existing task
-router.delete('/delete/:task_id',authenticationUsers, deleteOneTask); // Delete a task
+router.post('/create', createNewTask); // Create a new task
+router.put('/edit/:task_id', editOneTask); // Edit an existing task
+router.delete('/delete/:task_id', deleteOneTask); // Delete a task
 router.patch('/status/:task_id', changeOneTaskStatus)  // Assign user to a task
 router.patch('/assign/:task_id',authenticationAdmin, assignOneTask)  // Assign user to a task
 

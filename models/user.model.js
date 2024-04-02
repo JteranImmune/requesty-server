@@ -2,6 +2,12 @@ const  { Schema, model } = require('mongoose');
 
 const userSchema = new  Schema({
 
+        name: {
+            type: String,
+            require:[true,'Please add a name'],
+            trim: true,
+            maxlength: 20,
+        },
         email:{
             type: String,
             unique: true,
@@ -26,12 +32,6 @@ const userSchema = new  Schema({
             //     }
             // }
         },
-        name: {
-            type: String,
-            require:[true,'Please add a name'],
-            trim: true,
-            maxlength: 20,
-        },
         role: {
             type: String,
             enum: ['Admin', 'Team', 'Client'],
@@ -41,11 +41,7 @@ const userSchema = new  Schema({
             url: { 
                 type: String, 
                 default: "https://i.pravatar.cc/150?u=fake@pravatar.com"
-            },
-            filename: String,
-            mimetype: String,
-            path: String,
-            size: Number
+            }
         },
         createdAt:{
             type:Date,

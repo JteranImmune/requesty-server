@@ -11,7 +11,7 @@ const {
     deleteOneTeamUser,
 } = require( '../controllers/team.controller' );
 
-router.get('/all',authenticationAdmin, listAllTeamUsers); // List all Team user
+router.get('/all', listAllTeamUsers); // List all Team user
 router.get('/user/:user_id/',authenticationAdmin, getOneTeamUser); // List all Team user
 // router.post('/create', authenticationAdmin, createNewTeamUser); // Create a new Team user
 router.put('/edit/:user_id',authenticationAdmin, editOneTeamUser); // Edit an existing Team user
